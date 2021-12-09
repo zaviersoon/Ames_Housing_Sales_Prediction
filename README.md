@@ -6,7 +6,7 @@ Determining the sale price of a house is often too complicated due to the great 
 
 Our task is to explore and to find the key features that influences the sale price and develop a regression model to be able to accurately predicts the sale price for a given house in Ames, Iowa. Also, with a recommendation of top 3 features which parts of the house to improve to raise the house sale price and also 3 features that will lead to a decrease in the house sale price. 
 
-A successful housing price prediction model should be able to predict housing prices with a root mean square error (RMSE) that is ideally lower than \$25,000.
+A successful housing price prediction model should be able to predict housing prices with a root mean square error (RMSE) that is ideally lower than USD 25,000.
 
 ### Background
 
@@ -103,19 +103,18 @@ The S&P/Case-Shiller seasonally-adjusted national home price index rose by an am
 3. Lasso Regression is a regularization technique which is a very useful method to handle collinearity, filter out noise from data, and eventually prevent overfitting. In addition, Lasso Regression selects only some feature while reduces the coefficients of others to zero by imposing a constraint on the model parameters. Variables with a regression coefficient equal to zero after the shrinkage process are excluded from the model. Variables with non-zero regression coefficients variables are most strongly associated with the response variable. Thus, in this project, Lasso Regression picked 120 features and eliminated the other 86 features. This property is known as feature selection and which is absent in case of linear & ridge regression.
     - <p>Limitation of Lasso Regression: Lasso sometimes struggles with some types of data. If the number of predictors is greater than the number of observations, Lasso will pick at most n predictors as non-zero, even if all predictors are relevant. Also, if there are two or more highly collinear variables then Lasso regression select one of them randomly which is not good for the interpretation of data</p>
     
-4. In this project, Lasso Regression model had the best predictive performance on housing sale price in Ames, Iowa, and outperformed the other linear model tested (Linear & Ridge Regression) based on two metrics comparison (RMSE & R2). Lasso Model able to explain approximately 92.5% of the variability or fluctuation in the sample test data sale price by the predictor features. Also, Lasso Model able to predict the house sample test data sale price with only \$17,762.94 root mean square error (RMSE).
+4. In this project, Lasso Regression model had the best predictive performance on housing sale price in Ames, Iowa, and outperformed the other linear model tested (Linear & Ridge Regression) based on two metrics comparison (RMSE & R2). Lasso Model able to explain approximately 92.5% of the variability or fluctuation in the sample test data sale price by the predictor features. Also, Lasso Model able to predict the house sample test data sale price with only USD 17,762.94 root mean square error (RMSE).
 
 5. Based on finding above, total house square feet, overall quality & overall condition are the top 3 features which parts of the house to improve to raise the house sale price. e.g:
-    - Holding all else constant, for every one-unit increase in the house square feet (1 square feet), house sale price increases by about 15.3%. E.g : An average house sale price in Ames, Iowa is \$177,633.33. Thus, increase house square feet by one square feet the house sale price increase by \$27,178. This number is pretty high, which makes it easy for our model to become overfit, as even a slight increase in total house square feet will lead to a much larger shift as compared to a unit change for any of our other features.
-    - Holding all else constant, for every one-unit increase in the house overall quality (Rates of overall material and finish of the house), house sale price increases by about 8%. Thus, increase the rates of overall material and finish of the house by 1 score the house sale price increase by \$14,210.
-    - Holding all else constant, for every one-unit increase in the house overall condition (Rates the overall condition of the house), house sale price increases by about 4.3%. Thus, increase the rates of overall condition of the house by 1 score the house sale price increase by \$7,638.</p>    
+    - Holding all else constant, for every one-unit increase in the house square feet (1 square feet), house sale price increases by about 15.3%. E.g : An average house sale price in Ames, Iowa is USD 177,633.33. Thus, increase house square feet by one square feet the house sale price increase by USD 27,178. This number is pretty high, which makes it easy for our model to become overfit, as even a slight increase in total house square feet will lead to a much larger shift as compared to a unit change for any of our other features.
+    - Holding all else constant, for every one-unit increase in the house overall quality (Rates of overall material and finish of the house), house sale price increases by about 8%. Thus, increase the rates of overall material and finish of the house by 1 score the house sale price increase by USD 14,210.
+    - Holding all else constant, for every one-unit increase in the house overall condition (Rates the overall condition of the house), house sale price increases by about 4.3%. Thus, increase the rates of overall condition of the house by 1 score the house sale price increase by USD 7,638.    
 
 6. Based on finding above, house age, townhouse inside unit and unfinished square feet of basement area the top 3 features that will lead to a decrease in the house sale price. e.g:
-    - Holding all else constant, for every one-unit increase in the house age (1 year), house sale price decreases by about 5.5%. Thus, increase the house age by 1 year the house sale price decrease by \$9,770.
-    - Holding all else constant, the effect of it being townhouse inside unit, house sale price decreases by about 1.86% (\$3,304).
-    - Holding all else constant, for every one-unit increase in the house unfinished square feet of basement area (1 square feet), house sale price decreases by about 1.63%. Thus, increase the house unfinished square feet of basement area the house sale price decrease by \$2,895.</p>
-
-
+    - Holding all else constant, for every one-unit increase in the house age (1 year), house sale price decreases by about 5.5%. Thus, increase the house age by 1 year the house sale price decrease by USD 9,770.
+    - Holding all else constant, the effect of it being townhouse inside unit, house sale price decreases by about 1.86% (USD 3,304).
+    - Holding all else constant, for every one-unit increase in the house unfinished square feet of basement area (1 square feet), house sale price decreases by about 1.63%. Thus, increase the house unfinished square feet of basement area the house sale price decrease by USD 2,895.
+    
 ### Recommendations
 
 Based on our model, as a real estate firm looking to increase the selling price of the house could do the following:
