@@ -4,7 +4,7 @@
 
 Determining the sale price of a house is often too complicated due to the great number of features that influence pricing decision such as number of bedrooms, lot size, floor plan and etc. As a data scientist working for a real estate firm, our employer hopes to use the Ames housing data to help assess whether asking price of a house is higher or lower than the true value of the house in Ames, Iowa. If the home is undervalued, it may be a good investment for the firm. 
 
-Our task is to explore and to find the key features that influences the sale price and develop a regression model to be able to accurately predicts the sale price for a given house in Ames, Iowa. Also, with a recommendation of top 3 features which parts of the house to improve to raise the house sale price and also 3 features that will lead to a decrease in the house sale price. 
+Our task is to explore and develop a regression model to be able to accurately predicts the sale price for a given house in Ames, Iowa. Also, to identify top 3 key features that will increase the house sale price and also top 3 key features that will lead to a decrease in the house sale price. Follow by at least 3 recommendation on how to increase the selling price of the house (renovation & etc.)
 
 A successful housing price prediction model should be able to predict housing prices with a root mean square error (RMSE) that is ideally lower than USD 25,000.
 
@@ -92,6 +92,7 @@ The S&P/Case-Shiller seasonally-adjusted national home price index rose by an am
 |mo_sold|int64|train_clean.csv|Month Sold (MM)|
 |yr_sold|int64|train_clean.csv|Year Sold (YYYY)|  
 |sale_type|object|train_clean.csv|Type of sale| 
+|log_saleprice|float64|train_clean.csv|Log Sale price of house|
 
 ### Conclusions
 

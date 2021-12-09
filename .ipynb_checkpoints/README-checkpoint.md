@@ -1,180 +1,154 @@
-# Project 2 - Ames Housing Data and Kaggle Challenge
+# Project 2 Ames Housing
 
-Welcome to Project 2! It's time to start modeling.
+### Problem Statement
 
-**Primary Learning Objectives:**
-1. Creating and iteratively refining a regression model
-2. Using [Kaggle](https://www.kaggle.com/) to practice the modeling process
-3. Providing business insights through reporting and presentation.
+Determining the sale price of a house is often too complicated due to the great number of features that influence pricing decision such as number of bedrooms, lot size, floor plan and etc. As a data scientist working for a real estate firm, our employer hopes to use the Ames housing data to help assess whether asking price of a house is higher or lower than the true value of the house in Ames, Iowa. If the home is undervalued, it may be a good investment for the firm. 
 
-You are tasked with creating a regression model based on the Ames Housing Dataset. This model will predict the price of a house at sale.
+Our task is to explore and develop a regression model to be able to accurately predicts the sale price for a given house in Ames, Iowa. Also, to identify top 3 key features that will increase the house sale price and also top 3 key features that will lead to a decrease in the house sale price. Follow by at least 3 recommendation on how to increase the selling price of the house (renovation & etc.)
 
-The Ames Housing Dataset is an exceptionally detailed and robust dataset with over 70 columns of different features relating to houses.
+A successful housing price prediction model should be able to predict housing prices with a root mean square error (RMSE) that is ideally lower than USD 25,000.
 
-Secondly, we are hosting a competition on Kaggle to give you the opportunity to practice the following skills:
+### Background
 
-- Refining models over time
-- Use of train-test split, cross-validation, and data with unknown values for the target to simulate the modeling process
-- The use of Kaggle as a place to practice data science
+The great housing boom in the United States continues unabated after eight years of strong house price growth. The pandemic created a frenzied real estate market in much of the United States that has yet to let up, with demand for housing still outpacing the number of homes coming on the market, giving sellers a heavy upper hand in most of the country. A limited supply of properties in the market has added to upward house price pressure.
 
-As always, you will be submitting a technical report and a presentation. **You may find that the best model for Kaggle is not the best model to address your data science problem.**
+REAL estate investors acquired a record 18 per cent of US homes sold in the third quarter of 2021, wagering USD64 billion that home prices and rents will continue to surge. Investors bought more than 90,000 homes in the three months through September, up 10 per cent from the prior quarter and 80 per cent from a year earlier, according to a report by Redfin Corp ([*source*](https://www.businesstimes.com.sg/real-estate/property-investors-bet-us64b-on-us-homes-in-record-buying-spree)).
 
-## Set-up
+The S&P/Case-Shiller seasonally-adjusted national home price index rose by an amazing 19.7% during the year to July 2021 (13.61% inflation-adjusted), a sharp acceleration from the previous year’s 4.85% growth and the biggest y-o-y increase ever recorded. The median sales price of new homes sold soared 20.1% y-o-y in August 2021 to USD 390,900 according to the U.S. Census Bureau. For existing homes, the median price was up by 14.9% to USD 356,700 in August 2021 from a year earlier, according to the National Association of Realtors (NAR) ([*source*](https://www.globalpropertyguide.com/North-America/United-States/Price-History)).
 
-Before you begin working on this project, please do the following:
+### Contents
+- Part 1 Exploratory Data Analysis(EDA) & Cleaning
+- Part 2 Preprocessing and Modeling
 
-1. Sign up for an account on [Kaggle](https://www.kaggle.com/)
-2. Review the material and download data files on the [DSI-US-11 Regression Challenge](https://www.kaggle.com/c/dsi-us-11-project-2-regression-challenge)
-3. Review the [data description](http://jse.amstat.org/v19n3/decock/DataDocumentation.txt).
+### Data Dictionary
 
-## The Modeling Process
+|Feature|Type|Dataset|Description|
+|---|---|---|---|
+|ms_zoning|object|train_clean.csv|The general zoning classification of the house sale|
+|street|object|train_clean.csv|Type of road access to property| 
+|alley|object|train_clean.csv|Type of alley access to property|
+|lot_shape|object|train_clean.csv|General shape of property| 
+|land_contour|object|train_clean.csv|Flatness of the property|
+|lot_config|object|train_clean.csv|Lot configuration|
+|land_slope|object|train_clean.csv|Slope of property| 
+|neighborhood|object|train_clean.csv|Physical locations within Ames city limits| 
+|condition_1|object|train_clean.csv|Proximity to various conditions| 
+|condition_2|object|train_clean.csv|Proximity to various conditions (if more than one is present)| 
+|bldg_type|object|train_clean.csv|Type of dwelling| 
+|house_style|object|train_clean.csv|Style of dwelling|
+|overall_qual|int64|train_clean.csv|Rates the overall material and finish of the house|  
+|overall_cond|int64|train_clean.csv|Rates the overall condition of the house|  
+|year_built|int64|train_clean.csv|Original construction date|  
+|year_remod_add|int64|train_clean.csv|Remodel date (same as construction date if no remodeling or additions)| 
+|roof_style|object|train_clean.csv|Type of roof|
+|roof_matl|object|train_clean.csv|Roof material|
+|exterior_1st|object|train_clean.csv|Exterior covering on house|
+|exterior_2nd|object|train_clean.csv|Exterior covering on house (if more than one material)| 
+|mas_vnr_type|object|train_clean.csv|Masonry veneer type|
+|mas_vnr_area|float64|train_clean.csv|Masonry veneer area in square feet|
+|exter_qual|object|train_clean.csv|Evaluates the quality of the material on the exterior| 
+|exter_cond|object|train_clean.csv|Evaluates the present condition of the material on the exterior| 
+|foundation|object|train_clean.csv|Type of foundation| 
+|bsmt_qual|object|train_clean.csv|Evaluates the height of the basement| 
+|bsmt_cond| object|train_clean.csv|Evaluates the general condition of the basement| 
+|bsmt_exposure|object|train_clean.csv|Refers to walkout or garden level walls| 
+|bsmtfin_type_1|object|train_clean.csv|Rating of Type 1 basement finished area| 
+|bsmtfin_sf_1|float64|train_clean.csv|Type 1 finished square feet|
+|bsmtfin_type_2|object|train_clean.csv|Rating of Type 2 basement finished area (if multiple types)| 
+|bsmtfin_sf_2|float64|train_clean.csv|Type 2 finished square feet|
+|bsmt_unf_sf|float64|train_clean.csv|Unfinished square feet of basement area|
+|total_bsmt_sf|float64|train_clean.csv|Total square feet of basement area|
+|heating|object|train_clean.csv|Type of heating| 
+|heating_qc|object|train_clean.csv|Heating quality and condition| 
+|central_air|object|train_clean.csv|Central air conditioning| 
+|electrical|object|train_clean.csv|Electrical system| 
+|1st_flr_sf|int64|train_clean.csv|First Floor square feet|  
+|2nd_flr_sf|int64|train_clean.csv|Second floor square feet|  
+|log_gr_liv_area|float64|train_clean.csv|Log of grade (ground) living area square feet|
+|bsmt_full_bath|float64|train_clean.csv|Basement full bathrooms|
+|bsmt_half_bath|float64|train_clean.csv|Basement half bathrooms|
+|full_bath|int64|train_clean.csv|Full bathrooms above grade|  
+|half_bath|int64|train_clean.csv|Half baths above grade|  
+|bedroom_abvgr|int64|train_clean.csv|Bedrooms above grade (does NOT include basement bedrooms)| 
+|kitchen_abvgr|int64|train_clean.csv|Kitchens above grade|  
+|kitchen_qual|object|train_clean.csv|Kitchen quality| 
+|totrms_abvgrd|int64|train_clean.csv|Total rooms above grade (does not include bathrooms)| 
+|functional|object|train_clean.csv|Home functionality (Assume typical unless deductions are warranted)| 
+|fireplaces|int64|train_clean.csv|Number of fireplaces|  
+|fireplace_qu|object|train_clean.csv|Fireplace quality| 
+|garage_type|object|train_clean.csv|Garage location|
+|garage_yr_blt|float64|train_clean.csv|Year garage was built|
+|garage_finish|object|train_clean.csv|Interior finish of the garage| 
+|garage_cars|float64|train_clean.csv|Size of garage in car capacity|
+|garage_area|float64|train_clean.csv|Size of garage in square feet|
+|garage_qual|object|train_clean.csv|Garage quality| 
+|garage_cond|object|train_clean.csv|Garage condition| 
+|paved_drive|object|train_clean.csv|Paved driveway| 
+|wood_deck_sf|int64|train_clean.csv|Wood deck area in square feet|  
+|open_porch_sf|int64|train_clean.csv|Open porch area in square feet| 
+|enclosed_porch|int64|train_clean.csv|Enclosed porch area in square feet|  
+|screen_porch|int64|train_clean.csv|Screen porch area in square feet|  
+|misc_feature|object|train_clean.csv|Miscellaneous feature not covered in other categories| 
+|mo_sold|int64|train_clean.csv|Month Sold (MM)|
+|yr_sold|int64|train_clean.csv|Year Sold (YYYY)|  
+|sale_type|object|train_clean.csv|Type of sale| 
+|log_saleprice|float64|train_clean.csv|Log Sale price of house|
 
-1. The train dataset has all of the columns that you will need to generate and refine your models. The test dataset has all of those columns except for the target that you are trying to predict in your Regression model.
-2. Generate your regression model using the training data. We expect that within this process, you'll be making use of:
-    - train-test split
-    - cross-validation / grid searching for hyperparameters
-    - strong exploratory data analysis to question correlation and relationship across predictive variables
-    - code that reproducibly and consistently applies feature transformation (such as the preprocessing library)
-3. Predict the values for your target column in the test dataset and consider submitting your predictions to Kaggle to see how your model does against unknown data.
-    - **Note**: Kaggle expects to see your submissions in a specific format. Check the challenge's page to make sure you are formatting your CSVs correctly!
-    - **You are limited to models you've learned in class so far**. In other words, you cannot use XGBoost, Neural Networks or any other advanced model for this project.
-4. Evaluate your models!
-    - consider your evaluation metrics
-    - consider your baseline score
-    - how can your model be used for inference?
-    - why do you believe your model will generalize to new data?
+### Conclusions
 
-## Submission
+1. Linear regression is the most basic form, where the model is not penalized for its choice of weights, at all. That means, during the training stage, if the model feels like one particular feature is particularly important, the model may place a large weight to the feature. These models tend to overfitting. Hence, Regularization is needed. Regularization is an important concept that is used to avoid overfitting of the data, especially when the trained and test data are much varying.
 
-Materials must be submitted by the beginning of class on **11 Dec 2021 9AM** through your GitHub account repo shared with the Teaching Team.
+2. Ridge Regression is a regularizaton technique that includes an L2 penalty. This has the effect of shrinking the coefficients for those input variables that do not contribute much to the prediction task. Therefore, it prevent multicollinearity and reduces the model complexity by coefficient shrinkage.
+    - <p>Limitation of Ridge Regression: It shrinks coefficients towards zero but not absolute, thus it includes almost all the predictors and not capable of performing feature selection. Also, it trades variance for bias.</p>
+   
+3. Lasso Regression is a regularization technique which is a very useful method to handle collinearity, filter out noise from data, and eventually prevent overfitting. In addition, Lasso Regression selects only some feature while reduces the coefficients of others to zero by imposing a constraint on the model parameters. Variables with a regression coefficient equal to zero after the shrinkage process are excluded from the model. Variables with non-zero regression coefficients variables are most strongly associated with the response variable. Thus, in this project, Lasso Regression picked 120 features and eliminated the other 86 features. This property is known as feature selection and which is absent in case of linear & ridge regression.
+    - <p>Limitation of Lasso Regression: Lasso sometimes struggles with some types of data. If the number of predictors is greater than the number of observations, Lasso will pick at most n predictors as non-zero, even if all predictors are relevant. Also, if there are two or more highly collinear variables then Lasso regression select one of them randomly which is not good for the interpretation of data</p>
+    
+4. In this project, Lasso Regression model had the best predictive performance on housing sale price in Ames, Iowa, and outperformed the other linear model tested (Linear & Ridge Regression) based on two metrics comparison (RMSE & R2). Lasso Model able to explain approximately 92.5% of the variability or fluctuation in the sample test data sale price by the predictor features. Also, Lasso Model able to predict the house sample test data sale price with only USD 17,762.94 root mean square error (RMSE).
 
-Your technical report will be hosted on Github Enterprise. Make sure it includes:
+5. Based on finding above, total house square feet, overall quality & overall condition are the top 3 features which parts of the house to improve to raise the house sale price. e.g:
+    - Holding all else constant, for every one-unit increase in the house square feet (1 square feet), house sale price increases by about 15.3%. E.g : An average house sale price in Ames, Iowa is USD 177,633.33. Thus, increase house square feet by one square feet the house sale price increase by USD 27,178. This number is pretty high, which makes it easy for our model to become overfit, as even a slight increase in total house square feet will lead to a much larger shift as compared to a unit change for any of our other features.
+    - Holding all else constant, for every one-unit increase in the house overall quality (Rates of overall material and finish of the house), house sale price increases by about 8%. Thus, increase the rates of overall material and finish of the house by 1 score the house sale price increase by USD 14,210.
+    - Holding all else constant, for every one-unit increase in the house overall condition (Rates the overall condition of the house), house sale price increases by about 4.3%. Thus, increase the rates of overall condition of the house by 1 score the house sale price increase by USD 7,638.    
 
-- A README.md (that isn't this file)
-- Jupyter notebook(s) with your analysis and models (renamed to describe your project)
-- At least one successful prediction submission on [DSI-US-11 Regression Challenge](https://www.kaggle.com/c/dsi-us-11-project-2-regression-challenge) --  you should see your name in the "[Leaderboard](https://www.kaggle.com/c/dsi-us-11-project-2-regression-challenge/leaderboard)" tab.
-- Data files
-- Presentation slides
-- Any other necessary files (images, etc.)
+6. Based on finding above, house age, townhouse inside unit and unfinished square feet of basement area the top 3 features that will lead to a decrease in the house sale price. e.g:
+    - Holding all else constant, for every one-unit increase in the house age (1 year), house sale price decreases by about 5.5%. Thus, increase the house age by 1 year the house sale price decrease by USD 9,770.
+    - Holding all else constant, the effect of it being townhouse inside unit, house sale price decreases by about 1.86% (USD 3,304).
+    - Holding all else constant, for every one-unit increase in the house unfinished square feet of basement area (1 square feet), house sale price decreases by about 1.63%. Thus, increase the house unfinished square feet of basement area the house sale price decrease by USD 2,895.
+    
+### Recommendations
 
----
+Based on our model, as a real estate firm looking to increase the selling price of the house could do the following:
 
-## Presentation Structure
+1. Increase the overall material and finish quality of the house through renovation and painting.
+2. Improve the house overall condition through cleaning, renovate the garage if it is in bad condition and etc.
+3. Increase garage size to allow it to fit more than one car.
+4. Increase the number of bathrooms in the house, or renovate existing bedroom to add additional bathroom (if the house has more than four bedrooms).
+5. Switch to a brick exterior if using a hardboard or stucco exterior.
+6. Avoid holding the house for too long, as prices for all house types decreased with age.
+7. Finishing an unfinished  basement as a finished basement will add significant value to your property. Also, it will create additional living space.
 
-- **Presentation Time: 10 minutes**
-- Use Google Slides or some other visual aid (Keynote, Powerpoint, etc).
-- Consider the audience. Assume you are presenting to a non-technical audience (real estate agents, property owners, etc.).
-- Start with the **data science problem**.
-- Use visuals that are appropriately scaled and interpretable.
-- Talk about your procedure/methodology (high level, **CODE IS ALWAYS INAPPROPRIATE FOR A NON-TECHNICAL AUDIENCE**).
-- Talk about your primary findings.
-- Make sure you provide **clear recommendations** that follow logically from your analyses and narrative and answer your data science problem.
+### Limitations & Improvement
 
-Be sure to rehearse and time your presentation before class.
+As the model was developed using data on houses sold between 2006 - 2010 in Ames, USA, it may have limited applicabilities.
 
----
+1. The model only accounted for 92.5% of the variations in sample test data sale price. The remaining 7.5% could be due to factors related to area desirability (i.e. location). In the current dataset, only neighborhoods and proximity to roads are included under this category. In reality, factors such as the presence of schools, hospitals and malls are some examples of other factors that are also likely to affect house price.
 
-## Rubric
-Teaching team will evaluate your project using the following criteria.  You should make sure that you consider and/or follow most if not all of the considerations/recommendations outlined below **while** working through your project.
+2. In addition, it captures only a small time frame of four years. This is not enough to capture any annual patterns in sale price that could arise as a result of external factors, such as policy changes. This model also doesn't take into account the inflation of housing prices. Since the end of the financial crisis in 2008, housing prices throughout the US have been increasing steadily year over year. Our model would need significant retraining to predict the current house prices in Ames today.
 
-**Note:** Presentation will be done as a group while codes will be prepared and submitted by each student.
+3. The model is specific to houses in Ames and may not be as accurate when applied to data from another city given that each city tends to differ greatly in terms of external factors like geographical features, seasonal weather or the economic climate of that particular city.
 
-**Scores will be out of 27 points based on the 9 items in the rubric.** <br>
-*3 points per section*<br>
+Therefore, to improve the applicability and accuracy of the model to predict today price consider adding the following:
 
-| Score | Interpretation |
-| --- | --- |
-| **0** | *Project fails to meet the minimum requirements for this item.* |
-| **1** | *Project meets the minimum requirements for this item, but falls significantly short of portfolio-ready expectations.* |
-| **2** | *Project exceeds the minimum requirements for this item, but falls short of portfolio-ready expectations.* |
-| **3** | *Project meets or exceeds portfolio-ready expectations; demonstrates a thorough understanding of every outlined consideration.* |
+1. A wider time frame
+2. Different locations & seasonal weather
+3. Availability of facilities nearby
 
-### The Data Science Process
+### References
 
-**Problem Statement**
-- Is it clear what the student plans to do?
-- What type of model will be developed?
-- How will success be evaluated?
-- Is the scope of the project appropriate?
-- Is it clear who cares about this or why this is important to investigate?
-- Does the student consider the audience and the primary and secondary stakeholders?
-
-**Data Cleaning and EDA**
-- Are missing values imputed appropriately?
-- Are distributions examined and described?
-- Are outliers identified and addressed?
-- Are appropriate summary statistics provided?
-- Are steps taken during data cleaning and EDA framed appropriately?
-- Does the student address whether or not they are likely to be able to answer their problem statement with the provided data given what they've discovered during EDA?
-
-**Preprocessing and Modeling**
-- Are categorical variables one-hot encoded?
-- Does the student investigate or manufacture features with linear relationships to the target?
-- Have the data been scaled appropriately?
-- Does the student properly split and/or sample the data for validation/training purposes?
-- Does the student utilize feature selection to remove noisy or multi-collinear features?
-- Does the student test and evaluate a variety of models to identify a production algorithm (**AT MINIMUM:** linear regression, lasso, and ridge)?
-- Does the student defend their choice of production model relevant to the data at hand and the problem?
-- Does the student explain how the model works and evaluate its performance successes/downfalls?
-
-**Evaluation and Conceptual Understanding**
-- Does the student accurately identify and explain the baseline score?
-- Does the student select and use metrics relevant to the problem objective?
-- Is more than one metric utilized in order to better assess performance?
-- Does the student interpret the results of their model for purposes of inference?
-- Is domain knowledge demonstrated when interpreting results?
-- Does the student provide appropriate interpretation with regards to descriptive and inferential statistics?
-
-**Conclusion and Recommendations**
-- Does the student provide appropriate context to connect individual steps back to the overall project?
-- Is it clear how the final recommendations were reached?
-- Are the conclusions/recommendations clearly stated?
-- Does the conclusion answer the original problem statement?
-- Does the student address how findings of this research can be applied for the benefit of stakeholders?
-- Are future steps to move the project forward identified?
-
-### Organization and Professionalism
-
-**Project Organization**
-- Are modules imported correctly (using appropriate aliases)?
-- Are data imported/saved using relative paths?
-- Does the README provide a good executive summary of the project?
-- Is markdown formatting used appropriately to structure notebooks?
-- Are there an appropriate amount of comments to support the code?
-- Are files & directories organized correctly?
-- Are there unnecessary files included?
-- Do files and directories have well-structured, appropriate, consistent names?
-
-**Visualizations**
-- Are sufficient visualizations provided?
-- Do plots accurately demonstrate valid relationships?
-- Are plots labeled properly?
-- Are plots interpreted appropriately?
-- Are plots formatted and scaled appropriately for inclusion in a notebook-based technical report?
-
-**Python Syntax and Control Flow**
-- Is care taken to write human readable code?
-- Is the code syntactically correct (no runtime errors)?
-- Does the code generate desired results (logically correct)?
-- Does the code follows general best practices and style guidelines?
-- Are Pandas functions used appropriately?
-- Are `sklearn` methods used appropriately?
-
-**Presentation**
-- Is the problem statement clearly presented?
-- Does a strong narrative run through the presentation building toward a final conclusion?
-- Are the conclusions/recommendations clearly stated?
-- Is the level of technicality appropriate for the intended audience?
-- Is the student substantially over or under time?
-- Does the student appropriately pace their presentation?
-- Does the student deliver their message with clarity and volume?
-- Are appropriate visualizations generated for the intended audience?
-- Are visualizations necessary and useful for supporting conclusions/explaining findings?
-
-In order to pass the project, students must earn a minimum score of 1 for each category.
-- Earning below a 1 in one or more of the above categories would result in a failing project.
-- While a minimum of 1 in each category is the required threshold for graduation, students should aim to earn at least an average of 1.5 across each category. An average score below 1.5, while it may be passing, means students may want to solicit specific feedback in order to significantly improve the project before showcasing it as part of a portfolio or the job search.
-
-### REMEMBER:
-
-This is a learning environment and you are encouraged to try new things, even if they don't work out as well as you planned! While this rubric outlines what we look for in a _good_ project, it is up to you to go above and beyond to create a _great_ project. **Learn from your failures and you'll be prepared to succeed in the workforce**.
+1. https://www.globalpropertyguide.com/North-America/United-States/Price-History
+2. https://walletinvestor.com/real-estate-forecast/ia/story/ames-housing-market
+3. https://data.census.gov/cedsci/table?q=DP04&tid=ACSDP5Y2019.DP04
+4. https://www.statista.com/statistics/200445/reported-violent-crime-rate-in-the-us-states/
+5. https://www.amestrib.com/story/news/2020/10/16/ames-ranked-top-15-places-live/3678012001/
+6. https://data.library.virginia.edu/interpreting-log-transformations-in-a-linear-model/
