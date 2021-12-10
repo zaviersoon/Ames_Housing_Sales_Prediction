@@ -2,7 +2,7 @@
 
 ### Problem Statement
 
-Determining the sale price of a house is often too complicated due to the great number of features that influence pricing decision such as number of bedrooms, lot size, floor plan and etc. As a data scientist working for a real estate firm, our employer hopes to use the Ames housing data to help assess whether asking price of a house is higher or lower than the true value of the house in Ames, Iowa. If the home is undervalued, it may be a good investment for the firm. 
+Determining the sale price of a house is often too complicated due to the great number of features that influence pricing decision such as number of bedrooms, lot size, floor plan and etc. As a data scientist working for a real estate firm, our employer and board of director hopes to use the Ames housing data to help assess whether asking price of a house is higher or lower than the true value of the house in Ames, Iowa. If the home is undervalued, it may be a good investment for the firm. 
 
 Our task is to explore and develop a regression model to be able to accurately predicts the sale price for a given house in Ames, Iowa. Also, to identify top 3 key features that will increase the house sale price and also top 3 key features that will lead to a decrease in the house sale price. Follow by at least 3 recommendation on how to increase the selling price of the house (renovation & etc.)
 
